@@ -2,34 +2,36 @@ package model;
 
 public class EscreverPorExtenso3Digito extends EscreverPorExtenso2Digito {
 
-    public String saida3="",grupoCentena[] = new String[]{"Cento", "Dozentos", "Trezentos", "Quatrocentos", "Quinhentos", "Seissentos", "Setessentos", "Oitocentos", "Novecentos"};
-    private int centena = 0, dezena = 0, unidade = 0, index;
+    private final String grupoCentena[] = new String[]{"Cento", "Duzentos", "Trezentos", "Quatrocentos", "Quinhentos", "Seissentos", "Setessentos", "Oitocentos", "Novecentos"};
+    private int centena;
+    private String saida3 = "";
+
+    public int getCentena() {
+        return centena;
+    }
+
+    public void setCentena(int centena) {
+        this.centena = centena;
+    }
 
     public void inicializarCentenaDezenaUnidade(int numero) {
         centena = (int) (numero / 100) * 100;
-        dezena = (int) ((numero - centena) / 10) * 10;
-        unidade = numero - dezena - centena;
+        super.inicializarDezenaUnidade(numero - this.getCentena());
     }
 
-    public String escrever3Digitos(int numero) {
+    @Override
+    public String escrever(int numero) {
         inicializarCentenaDezenaUnidade(numero);
         if (numero == 100) {
             saida3 = "Cem";
-        } else if (dezena == 0 && unidade == 0) {
-            index = centena / 100;
-            saida3 = grupoCentena[index - 1];
-        } else if (dezena > 0 && dezena < 20 && unidade == 0) {
-            saida3 = grupoCentena[(centena / 100) - 1] + " e " + super.escrever1Digito(dezena);
-        } else if (dezena > 0 && unidade == 0) {
-            saida3 = grupoCentena[(centena / 100) - 1] + " e " + super.escrever2Digitos(dezena + unidade);
-        } else if (dezena == 0 && unidade > 0) {
-            saida3 = grupoCentena[(centena / 100) - 1] + " e " + super.escrever1Digito(unidade);
-        } else if (dezena > 0 && dezena < 20 && unidade > 0) {
-            saida3 = grupoCentena[(centena / 100) - 1] + " e " + super.escrever1Digito(unidade + dezena);
+        } else if (this.getDezena() == 0 && this.getUnidade() == 0) {
+            index = (centena / 100) - 1;
+            saida3 = grupoCentena[index];
         } else {
-
-            saida3 = grupoCentena[(centena / 100) - 1] + " e " + super.escrever2Digitos(dezena + unidade);
+            index = (this.getCentena() / 100) - 1;
+            saida3 = this.grupoCentena[index] + " e " + super.escrever(this.getDezena() + this.getUnidade());
         }
+
         return saida3;
     }
 }

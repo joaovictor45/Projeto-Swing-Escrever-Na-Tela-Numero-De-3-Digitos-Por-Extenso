@@ -1,10 +1,12 @@
- 
 package view;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import controller.ControllerConverterNumero;
+import java.awt.Color;
+import java.lang.System.Logger.Level;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,14 +14,23 @@ import controller.ControllerConverterNumero;
  */
 public class TelaPrincipalView extends javax.swing.JFrame {
 
-    
     private final ControllerConverterNumero controller;
+
     public TelaPrincipalView() {
         initComponents();
-         controller = new ControllerConverterNumero(this);
-         this.setLocationRelativeTo(null);//Centraliza o frame
+        controller = new ControllerConverterNumero(this);
+        this.setLocationRelativeTo(null);//Centraliza o frame
+        this.getjLabel1TextoTelaPrincipal().setForeground(Color.white);
     }
- 
+
+    public JLabel getjLabel1TextoTelaPrincipal() {
+        return jLabel1TextoTelaPrincipal;
+    }
+
+    public void setjLabel1TextoTelaPrincipal(JLabel jLabel1TextoTelaPrincipal) {
+        this.jLabel1TextoTelaPrincipal = jLabel1TextoTelaPrincipal;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -36,6 +47,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1TextoTelaPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1TextoTelaPrincipal.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1TextoTelaPrincipal.setText("Digite um número inteiro : ");
         getContentPane().add(jLabel1TextoTelaPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, -1, 40));
@@ -71,15 +83,20 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1NumeroDigitadoActionPerformed
 
     private void jButton1EscreverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1EscreverActionPerformed
-        
-                controller.Converter();
+
+        try {
+            controller.Converter();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Número inválido. Digite um número inteiro");
+        }
+
+
     }//GEN-LAST:event_jButton1EscreverActionPerformed
 
     private void jTextField1NumeroDigitadoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1NumeroDigitadoMouseReleased
-        
+
     }//GEN-LAST:event_jTextField1NumeroDigitadoMouseReleased
 
-  
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -105,9 +122,10 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaPrincipalView().setVisible(true);
-               
+                
+
             }
-         
+
         });
     }
 
